@@ -1,0 +1,11 @@
+"jurisdiction_id";"jurisdiction_name";"jurisdiction_tax_haven_id"
+1;'Namibia';NULL
+2;'Nevada; USA';1
+3;'Alberta; Canada';2
+4;'Bermuda';3
+5;'BVI';4
+6;'Cayman Islands';5
+7;'Isle of Man';6
+8;'Canada';2
+9;'British Columbia, Canada';2
+10;'Norway';NULL
