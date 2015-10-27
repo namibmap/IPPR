@@ -1,0 +1,53 @@
+
+tr {
+width: 100%;
+display: inline-table;
+}
+
+table{
+ height:150px; 
+}
+
+
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+
+.footer_info {
+  background-color: #f17f51;
+  padding: 5 15px;
+   height: 100px;
+  color: white;
+  font-size: 14px;
+}
+
+.btn-primary{
+  height:50px;	
+}
+
+.btn-active{
+  background-color: #2E64FE;	
+}
+
+.btn:hover{
+  background-color: #2E64FE;	
+}
+
+#juri_map {
+        width: 700px;
+        height: 500px;
+      }
+      
+#holder_map {
+        width: 300px;
+        height: 400px;
+      }      
+
+
