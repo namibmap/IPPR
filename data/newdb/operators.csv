@@ -1,0 +1,9 @@
+"operator_id";"operator_license_id";"operator_company_id";"operator_start_date";"operator_end_date";"operator_date_approximate"
+1;16;12;NULL;NULL;0
+2;14;15;NULL;NULL;0
+3;5;18;NULL;NULL;0
+4;13;24;NULL;'2013-06-26';0
+5;13;33;'2013-06-26';NULL;0
+6;6;6;NULL;'2014-12-31';0
+7;6;27;'2014-12-31';NULL;0
+8;2;14;NULL;NULL;0
