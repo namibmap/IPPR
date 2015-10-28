@@ -9,27 +9,21 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->		
+		<![endif]-->	
+        
 		<!-- script references -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->		
+        
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 		<link href="css/styles.css" rel="stylesheet">
 		
-		<script src="https://maps.googleapis.com/maps/api/js"></script> <!-- GOOGLE MAPS API -->				
-		<script>
-	      function initialize() {
-	        var mapCanvas = document.getElementById('holder_map');
-	        var mapOptions = {
-	          center: new google.maps.LatLng(-22.5608807, 17.0657549),
-	          zoom: 5,
-	          mapTypeId: google.maps.MapTypeId.ROADMAP
-	        }
-	        var map = new google.maps.Map(mapCanvas, mapOptions)
-	      }
-	      google.maps.event.addDomListener(window, 'load', initialize);
-       </script>
+        <!-- CartoDB CSS and JS -->
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+        <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+        <script src="js/namibmap.js"></script>
+        
        <!-- script references --> 
 	</head>
 	<body>
@@ -167,7 +161,6 @@
         <div class="col-md-4">
         	<div class="well">
         		<h2>Concessions</h2>
-        		<!-- <img src="./img/namibia_map.jpg"> -->
         		<div id="holder_map"></div>        		
       	</div>
         </div>
