@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Mapping Ownership of Pertroleum Licenses</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->			
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<!--  <script src="js/bootstrap.min.js"></script> -->		
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>	
+		
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+	      google.load("visualization", "1", {packages:["orgchart"]});
+	      google.setOnLoadCallback(drawChart);
+	      function drawChart() {
+	        var data = new google.visualization.DataTable();
+	        data.addColumn('string', 'Name');
+	        data.addColumn('string', 'Manager');
+	        data.addColumn('string', 'ToolTip');
+	
+	        data.addRows([
+	          [{v:'Mike', f:'Mike<div style="color:red; font-style:italic">President</div>'}, '', 'The President'],
+	          [{v:'Jim', f:'Jim<div style="color:red; font-style:italic">Vice President</div>'}, 'Mike', 'VP'],
+	          ['Alice', 'Mike', ''],
+	          ['Bob', 'Jim', 'Bob Sponge'],
+	          ['Carol', 'Bob', '']
+	        ]);
+	
+	        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+	        chart.draw(data, {allowHtml:true});
+	      }
+	   </script>
+		
+			
+		<link href="css/styles.css" rel="stylesheet">
+	</head>
+	<body>
+
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">IPPR</a>
+      
+    </div><!-- /.container -->
+</div><!-- /.navbar -->
+  
+<!-- HEADER 
+=================================-->
+
+<div class="jumbotron text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col col-lg-12 col-sm-12">
+          <h1>IPPR Namibia</h1>
+          <p>Mapping Ownership of petroleum licenses</p>          
+        </div>
+      </div>
+    </div>
+    <br />
+    <!-- BUTTONS -->
+    <div class="container"> 
+      <div class="row">
+      <div class="col col-lg-2 col-sm-2"> 
+      <!-- Spacer -->
+      </div>
+        <div class="col col-lg-4 col-sm-4">        	
+         <a href="/"><button type="button" class="btn btn-primary btn-block">License Holders</button></a>
+        </div>
+        
+        <div class="col col-lg-4 col-sm-4">
+         <a href="company_jurisdictions.html"><button type="button" class="btn btn-primary btn-block">Company Jurisdictions</button> </a>       
+        </div>
+      </div>
+      <br />
+      <div class="row">
+      <div class="col col-lg-2 col-sm-2"> 
+      <!-- Spacer -->
+      </div>
+        <div class="col col-lg-4 col-sm-4">        	
+         <a href="license_transactions.html"><button type="button" class="btn btn-primary btn-block">License Transactions</button></a>                 
+        </div>
+        
+        <div class="col col-lg-4 col-sm-4">
+        <a href="company_ownership.html"> <button type="button" class="btn btn-primary btn-block btn-active">Company Ownership</button></a>        
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col col-lg-12 col-sm-12">        	
+         <h2>Who owns the companies?</h2> 
+         <p>Use this diagram to determine ownership of companies.</p>                
+        </div>
+        
+      </div>
+    </div> 
+</div>
+<!-- /header container-->
+
+<!-- CONTENT
+=================================-->
+<div class="container">
+    <!-- <div class="row">
+        <div class="col-lg-12"><div class="well"><p>12 wide</p></div></div>
+    </div>-->
+    <div class="row">        
+        <div class="col-md-4">
+        	<div class="well">
+        		<h2>Licenses</h2>       		
+        		<form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+           	   </form>      		
+        		<p>
+        		<table class="table table-striped">				
+				<tbody>
+					<tr><td>PEL</td></tr>
+					<tr><td>PEL</td></tr>
+					<tr><td>PEL</td></tr>
+														
+  				</tbody>
+				</table>				
+				</p>
+       		</div>
+       		
+       		<div class="well">
+        		<h2>Companies</h2>
+        		<form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+           	   </form>        		
+        		<p>
+        		<table class="table table-striped">				
+				<tbody>
+					<tr><td>COMPANY</td></tr>
+					<tr><td>COMPANY</td></tr>
+					<tr><td>COMPANY</td></tr>
+												
+  				</tbody>
+				</table>				
+				</p>
+        	</div>        		
+     	</div>        
+        <div class="col-md-8">
+        	  	<div class="well">
+        	  		<div id="chart_div"></div>        	  	
+        	  	</div>     	
+        </div>              
+    </div>
+    <div class="row">        
+        <div class="col-md-12 ">
+        	<div class="well footer_info">
+        	<p>Additional information</p>
+        	</div>
+        </div>
+    </div>
+    
+  	<hr>
+  	
+</div>
+<hr>
+<!-- /CONTENT ============-->
+
+	<!-- script references -->
+		
+	</body>
+</html>
