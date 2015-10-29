@@ -1,0 +1,32 @@
+﻿[
+  {
+    "operator": {
+      "name": "op1",
+      "partners": [
+        "partner2",
+        "partner4",
+        "partner5"
+      ]
+    }
+  },
+  {
+    "operator": {
+      "name": "op2",
+      "partners": [
+        "partner2",
+        "partner4",
+        "partner5"
+      ]
+    }
+  },
+  {
+    "operator": {
+      "name": "op3",
+      "partners": [
+        "partner1",
+        "partner3",
+        "partner5"
+      ]
+    }
+  }
+]
