@@ -5,7 +5,7 @@ var express = require('express'),
 app.use(express.static(__dirname +'/public'));
 
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '/public/licence_holders.html');
+    res.sendFile(__dirname + '/public/frontend/index.html');
 });
 
 // listen on port 3000
