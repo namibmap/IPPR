@@ -10,15 +10,21 @@ client.on('connect', function() {
 
     //Retrieve list of all company names. Data is returned in JSON
     var sql_companies = "SELECT company_name FROM companies";
-    client.query(sql_companies, function(err, data){
-    // JSON parsed data or error messages are returned
-    })
+    
+    //Retrieve list of concessions/blocks and PELs they are related to
+    var sql_PEL_and_concessions = "SELECT concession_number, licenses.license_number  \
+		FROM concessions, licenses \
+		WHERE concession_license_id = licenses.license_id";
+
+	//Queries can be chained
+    client.query(sql_companies, function(err, data){})
+    .query(sql_PEL_and_concessions, function(err, data){})
 });
 
-// Client is a stream object so you can pipe responses as new line delimited JSON
+// client is a stream object so you can pipe responses as new line delimited JSON
 // Saving response to file 
-// TODO: Can we pass this to EJS directly?
-var output = require('fs').createWriteStream(__dirname + '/companies.json');
+// TODO: Can we pass this to EJS directly or read the response.json instead?
+var output = require('fs').createWriteStream(__dirname + '/response.json');
 client.pipe(output);
 client.connect();
 
