@@ -21,12 +21,27 @@ client.on('connect', function() {
     .query(sql_PEL_and_concessions, function(err, data){})
 });
 
-// client is a stream object so you can pipe responses as new line delimited JSON
-// Saving response to file 
-// TODO: Can we pass this to EJS directly or read the response.json instead?
-var output = require('fs').createWriteStream(__dirname + '/response.json');
-client.pipe(output);
+var companies = [];
+var licenses = {};
+client.on('data',function(buffer){
+  var CartoDBdataStream = JSON.parse(buffer);
+  for (var i=0; i<CartoDBdataStream.rows.length; i++){
+    if (CartoDBdataStream.rows[i].company_name){
+        companies.push(CartoDBdataStream.rows[i].company_name);
+    }
+    if (CartoDBdataStream.rows[i].license_number){
+        var key = CartoDBdataStream.rows[i].license_number;
+        if (key in licenses){
+            licenses[key].push(CartoDBdataStream.rows[i].concession_number);
+        } else {
+            licenses[key] = [CartoDBdataStream.rows[i].concession_number];
+        }
+    }
+  }
+});
+
 client.connect();
+
 
 //ExpressJS stuff
 var express = require('express'),
@@ -38,7 +53,10 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname +'/public'));
 
 app.get('/', function(req, res){
-    res.render('pages/index');
+    res.render('pages/index', {
+        companies: companies,
+        licenses: licenses
+    });
 });
 
 // listen on port 3000
