@@ -6,7 +6,7 @@ var client = new CartoDB({user: secret.USER, api_key: secret.API_KEY});
 
 // Connect to CartoDB's namibmap account and send query
 client.on('connect', function() {
-    console.log("Connected to CartoDB! :-)");
+    console.log("Connected to CartoDB!");
 
     //Retrieve list of all company names. Data is returned in JSON
     var sql_companies = "SELECT company_name FROM companies";
@@ -43,3 +43,4 @@ app.get('/', function(req, res){
 
 // listen on port 3000
 app.listen(3000);
+console.log("App is running at http://localhost:3000");
