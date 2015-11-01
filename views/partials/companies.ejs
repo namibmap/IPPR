@@ -9,12 +9,8 @@
         <input type="text" class="form-control">
     </div>
     <ul class="list-group">
-        <li class="list-group-item list-block">company A</li>
-        <li class="list-group-item list-block">company B</li>
-        <li class="list-group-item list-block">company C</li>
-        <li class="list-group-item list-block">company D</li>
-        <li class="list-group-item list-block">company E</li>
-        <li class="list-group-item list-block">company F</li>
-        <li class="list-group-item list-block">company G</li>
+        <%  for (var i=0; i<companies.length; i++){ %>
+        <li class="list-group-item list-block"><%= companies[i] %></li>
+        <% }%>
     </ul>
 </div>

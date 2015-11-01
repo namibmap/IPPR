@@ -9,12 +9,11 @@
         <input type="text" class="form-control">
     </div>
     <ul class="list-group">
-        <li class="list-group-item list-header">PEL</li>
-        <li class="list-group-item list-block">block</li>
-        <li class="list-group-item list-block">block</li>
-        <li class="list-group-item list-block">block</li>
-        <li class="list-group-item list-header">PEL</li>
-        <li class="list-group-item list-block">block</li>
-        <li class="list-group-item list-block">block</li>
+        <%  for (var property in licenses){ %>
+            <li class="list-group-item list-header"><%= property %></li>
+            <% for (var i=0; i<licenses[property].length; i++){ %>
+                <li class="list-group-item list-block"><%= licenses[property][i] %></li>
+        <%}
+        }%>
     </ul>
 </div>
