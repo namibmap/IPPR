@@ -1,1 +1,4 @@
 .idea/*
+secret.js
+response.json
+node_modules
