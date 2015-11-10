@@ -23,6 +23,8 @@
   "dependencies": {
     "cartodb": "^0.2.1",
     "ejs": "~2.3.4",
-    "express": "~4.13.3"
+    "express": "~4.13.3",
+    "jsonfile": "~2.2.3",
+    "fs": "0.0.2"
   }
 }

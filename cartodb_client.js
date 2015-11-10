@@ -1,11 +1,10 @@
 var CartoDB = require('cartodb'),
+    jsonfile = require('jsonfile'),
     Secret = require('./secret'),
     client = new CartoDB({
         user: Secret.USER, 
         api_key: Secret.API_KEY
-    }),
-    licenses = {},
-    companies = [];
+    });
 
 function initialize() {
     // Connect to CartoDB's namibmap account and send query
@@ -19,35 +18,20 @@ client.on('connect', function() {
     var sql_companies = "SELECT company_name FROM companies";
         
     //Retrieve list of concessions/blocks and PELs they are related to
-    var sql_PEL_and_concessions = "SELECT concession_number, licenses.license_number  \
-        FROM concessions, licenses \
-        WHERE concession_license_id = licenses.license_id";
+    var sql_PEL_and_concessions = "SELECT concession_number, licenses.license_number FROM concessions, licenses WHERE concession_license_id = licenses.license_id";
 
-    client.query(sql_companies, function(err, data){})
-          .query(sql_PEL_and_concessions, function(err, data){});
-});
-
-client.on('data', function(buffer) {
-    console.log("Parsing CartoDb data...");    
-
-    var CartoDbDataStream = JSON.parse(buffer);
-    for (var i = 0; i < CartoDbDataStream.rows.length; i++) {
-        if (CartoDbDataStream.rows[i].company_name) {
-            companies.push(CartoDbDataStream.rows[i].company_name);
-        }
-        if (CartoDbDataStream.rows[i].license_number) {
-            var key = CartoDbDataStream.rows[i].license_number;
-            if (key in licenses) {
-                licenses[key].push(CartoDbDataStream.rows[i].concession_number);
-            } else {
-                licenses[key] = [CartoDbDataStream.rows[i].concession_number];
-            }
-        }
-    }
+    client.query(sql_companies, function(err, data){
+            jsonfile.writeFile(__dirname + '/companies.json', data, function(err){
+                //console.log(err);
+            })
+          })
+          .query(sql_PEL_and_concessions, function(err, data){
+            jsonfile.writeFile(__dirname + '/licenses.json', data, function(err){
+                //console.log(err);
+            })
+          });
 });
 
 exports.CartoDbClient = {
-    initialize: initialize,
-    licenses: licenses,
-    companies: companies
+    initialize: initialize
 };

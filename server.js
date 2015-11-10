@@ -1,19 +1,24 @@
 var express = require('express'),
-    CartoDbClient = require('./cartodb_client').CartoDbClient;
+    companies = require('./companies.json'),
+    modifyJSON = require('./helpers/modifyJSON').modifyJSON,
+    licenses_sorted = modifyJSON.sortLicenses(),
+    updateJSON = require('./helpers/updateJSON').updateJSON;
 
-CartoDbClient.initialize();
+// check if updated JSON needs to fetched from CartoDB
+updateJSON.checkFileTimeStamp();
 
 var app = express();
+
 app.set('view engine', 'ejs');
 
 // serve static files from public folder
 app.use(express.static(__dirname +'/public'));
 
 app.get('/', function(req, res){
-    res.render('pages/index', {
-        companies: CartoDbClient.companies,
-        licenses: CartoDbClient.licenses
-    });
+       res.render('pages/index', {
+            companies: companies,
+            licenses: licenses_sorted
+       });
 });
 
 // listen on port 3000
