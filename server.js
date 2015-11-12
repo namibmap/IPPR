@@ -8,11 +8,11 @@ var client = new CartoDB({user: secret.USER, api_key: secret.API_KEY});
 client.on('connect', function() {
     console.log("Connected to CartoDB!");
 
-    //Retrieve list of all company names. Data is returned in JSON
-    var sql_companies = "SELECT company_name FROM companies";
+    //Retrieve list of all company names and ids. Data is returned in JSON
+    var sql_companies = "SELECT company_name, company_id FROM companies";	//company_name
     
-    //Retrieve list of concessions/blocks and PELs they are related to
-    var sql_PEL_and_concessions = "SELECT concession_number, licenses.license_number  \
+    //Retrieve list of concessions/blocks and PELs they are related to  ASSUMING concession_license_id = company_id
+    var sql_PEL_and_concessions = "SELECT concession_number, concession_license_id, licenses.license_number  \
 		FROM concessions, licenses \
 		WHERE concession_license_id = licenses.license_id";
 
@@ -20,21 +20,34 @@ client.on('connect', function() {
     client.query(sql_companies, function(err, data){})
     .query(sql_PEL_and_concessions, function(err, data){})
 });
-
+//associate company ID with its name for cross referencing
+function companyRecord(companyName, companyId){
+	this.name = companyName;
+	this.id = companyId;
+}
+//associate concession_license_id with concession for cross referencing
+function concessionLicense(concessionNum, concessionId){
+	this.concession = concessionNum;
+	this.id = concessionId;
+}
 var companies = [];
-var licenses = {};
+var licenses ={};
+
 client.on('data',function(buffer){
   var CartoDBdataStream = JSON.parse(buffer);
+  console.log(CartoDBdataStream);
   for (var i=0; i<CartoDBdataStream.rows.length; i++){
-    if (CartoDBdataStream.rows[i].company_name){
-        companies.push(CartoDBdataStream.rows[i].company_name);
+    if (CartoDBdataStream.rows[i].company_name && CartoDBdataStream.rows[i].company_id){
+		var thisCompany = new companyRecord(CartoDBdataStream.rows[i].company_name, CartoDBdataStream.rows[i].company_id);
+		companies.push(thisCompany);	//store name and id for each company	
     }
     if (CartoDBdataStream.rows[i].license_number){
         var key = CartoDBdataStream.rows[i].license_number;
+		var thisConcession = new concessionLicense(CartoDBdataStream.rows[i].concession_number, CartoDBdataStream.rows[i].concession_license_id);
         if (key in licenses){
-            licenses[key].push(CartoDBdataStream.rows[i].concession_number);
+            licenses[key].push(thisConcession);	//replaced CartoDBdataStream.rows[i].concession_number
         } else {
-            licenses[key] = [CartoDBdataStream.rows[i].concession_number];
+            licenses[key] = [CartoDBdataStream.rows[i].license_number];	//replaced concession_number
         }
     }
   }
@@ -54,7 +67,7 @@ app.use(express.static(__dirname +'/public'));
 
 app.get('/', function(req, res){
     res.render('pages/index', {
-        companies: companies,
+        companies: companies,		
         licenses: licenses
     });
 });

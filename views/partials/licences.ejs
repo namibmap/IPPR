@@ -6,13 +6,20 @@
                 <i class="glyphicon glyphicon-search"></i>
             </button>
         </div>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" value="{{licenseType}}">
     </div>
     <ul class="list-group">
         <%  for (var property in licenses){ %>
             <li class="list-group-item list-header"><%= property %></li>
-            <% for (var i=0; i<licenses[property].length; i++){ %>
-                <li class="list-group-item list-block"><%= licenses[property][i] %></li>
+				<% for (var i=0;i<licenses[property].length;i++){ 				
+					console.log(licenses[property][i]);
+					var license_id = "";
+					concessionName = licenses[property][i].concession;
+					//		console.log(licenses[property][i]);
+					license_id = "license_" + licenses[property][i];
+					//		console.log(licenses[property][i]);
+				%>
+            <li class="list-group-item list-block" data-ng-click="makeSelection($event, 'license')" id=<%= license_id %>> <%= concessionName %></li>
         <%}
         }%>
     </ul>

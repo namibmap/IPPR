@@ -1,0 +1,48 @@
+<script src="js/jquery-2.1.4.min.js"></script>	
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+<script>
+	angular.module('namibApp', [])
+	.directive('namibSelect', [function($scope, $element, $attr) {
+		$scope.company = "";
+		$scope.licenseType = "";
+		$scope.selectedCompany = null;
+		$scope.selectedLicense = null;
+		$scope.makeSelection = function(thisEvent, type) {
+			if(type == "company"){
+				$scope.selectCompany(thisEvent.target);
+			} else {
+				$scope.selectLicense(thisEvent.target);
+			}
+		}
+		$scope.selectCompany = function(elem){
+			if(!angular.equals($scope.selectedCompany, elem)){	//toggle selection
+				if($scope.selectedCompany){
+					$scope.selectedCompany.style.backgroundColor = "#FFFFFF";
+				}
+				$scope.company = elem.innerHTML;
+				$scope.selectedCompany = elem;
+				elem.style.backgroundColor="#CCCCFF";
+			}
+		};
+		$scope.selectLicense = function(elem){
+			if(!angular.equals($scope.selectedLicense, elem)){	//toggle selection
+				if($scope.selectedLicense){
+					$scope.selectedLicense.style.backgroundColor = "#FFFFFF";
+				}
+				$scope.licenseType = elem.innerHTML;
+				$scope.selectedLicense = elem;
+				elem.style.backgroundColor="#CCCCFF";
+				if($scope.selectedCompany){
+					$scope.selectedCompany.style.backgroundColor = "#FFFFFF";
+				}
+				//select company holding selected licenseType  license id format "license_" + concessionRecord.id;
+				var compId = elem.id;
+				var selectedId = "#" + compId.slice(8,compId.length);
+				//$scope.selectedCompany = angular.element(selectedId);
+				$scope.selectedCompany = document.getElementById(selectedId);
+				console.log(selectedId);
+			}				
+		};	
+	}]);
+</script>

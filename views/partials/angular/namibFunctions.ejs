@@ -1,0 +1,47 @@
+<script src="js/jquery-2.1.4.min.js"></script>	
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+<script>
+	angular.module('namibApp', [])
+	.controller('namibCtrl', ['$scope', function($scope) {
+		$scope.company = "";				//nothing selected on initialisation
+		$scope.licenseType = "";
+		$scope.selectedCompany = null;
+		$scope.selectedLicense = null;
+		$scope.makeSelection = function(thisEvent, type) {
+			if(type == "company"){
+				$scope.selectCompany(thisEvent.target);
+			} else {
+				$scope.selectLicense(thisEvent.target);
+			}
+		}
+		$scope.selectCompany = function(elem){
+			if(!angular.equals($scope.selectedCompany, elem)){	//move highlight to current selection
+				if($scope.selectedCompany){
+					$scope.selectedCompany.style.backgroundColor = "#FFFFFF";
+				}
+				$scope.company = elem.innerHTML;
+				$scope.selectedCompany = elem;					//store current company selection
+				elem.style.backgroundColor="#CCCCFF";
+			}
+		};
+		$scope.selectLicense = function(elem){
+			if(!angular.equals($scope.selectedLicense, elem)){	//move highlight to current selection
+				if($scope.selectedLicense){
+					$scope.selectedLicense.style.backgroundColor = "#FFFFFF";
+				}
+				$scope.licenseType = elem.innerHTML;
+				$scope.selectedLicense = elem;					//store current license selection
+				elem.style.backgroundColor="#CCCCFF";
+				if($scope.selectedCompany){
+					$scope.selectedCompany.style.backgroundColor = "#FFFFFF";
+				}
+				//select company holding selected licenseType  license id format = "license_" + concessionRecord.id;
+				var compId = elem.id;
+				var selectedId = "#" + compId.slice(8,compId.length);	// grab company Id from license Id
+				$scope.selectedCompany = getElementFromId(selectedId);	//HOW DO I DO THIS IN ANGULARJS?  data-ng-model?
+				console.log(selectedId);
+			}				
+		};
+	}]);
+</script>
