@@ -1,11 +1,31 @@
 var express = require('express'),
-    companies = require('./companies.json'),
-    modifyJSON = require('./helpers/modifyJSON').modifyJSON,
-    licenses_sorted = modifyJSON.sortLicenses(),
-    updateJSON = require('./helpers/updateJSON').updateJSON;
+    fs = require('fs'),
+    companies, modifyJSON, licenses_sorted;
 
-// check if updated JSON needs to fetched from CartoDB
-updateJSON.checkFileTimeStamp();
+(function checkIfJSONExists(){
+    fs.exists('./companies.json', function(exists){
+        if (exists){
+            var updateJSON = require('./helpers/updateJSON').updateJSON;
+             // check if need to fetch JSON from CartoDB
+             updateJSON.checkFileTimeStamp();
+             createJSONVariables();
+        } else{
+            var CartoDbClient = require('./cartodb_client').CartoDbClient;
+            CartoDbClient.initialize();
+            createJSONVariables();
+        }
+    })
+})();
+
+function createJSONVariables(){
+    console.log('reading variables...');
+    setTimeout(function(){
+            companies = require('./companies.json'),
+            modifyJSON = require('./helpers/modifyJSON').modifyJSON,
+            licenses_sorted = modifyJSON.sortLicenses();
+    }, 2000);
+}
+
 
 var app = express();
 

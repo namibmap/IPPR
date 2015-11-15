@@ -8,7 +8,7 @@ var CartoDB = require('cartodb'),
 
 function initialize() {
     // Connect to CartoDB's namibmap account and send query
-    client.connect();    
+    client.connect();
 };
 
 client.on('connect', function() {
@@ -20,7 +20,7 @@ client.on('connect', function() {
     //Retrieve list of concessions/blocks and PELs they are related to
     var sql_PEL_and_concessions = "SELECT concession_number, licenses.license_number FROM concessions, licenses WHERE concession_license_id = licenses.license_id";
 
-    client.query(sql_companies, function(err, data){
+     client.query(sql_companies, function(err, data){
             jsonfile.writeFile(__dirname + '/companies.json', data, function(err){
                 //console.log(err);
             })
@@ -29,6 +29,7 @@ client.on('connect', function() {
             jsonfile.writeFile(__dirname + '/licenses.json', data, function(err){
                 //console.log(err);
             })
+            console.log('done writing file...');
           });
 });
 
