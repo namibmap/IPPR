@@ -1,7 +1,7 @@
 var express = require('express'),
     licenses_sorted = {},
     companies_sorted = [],
-    DataService = require('./data-service.js').DataService;
+    DataService = require('./data-service').DataService;
 
 var app = express();
 

@@ -18,6 +18,8 @@ function getGeoData(callback) {
                 }
                 filterGeoData(callback);
             })
+        } else {
+            console.log("An error occurred while fetching the GeoJSON data from CartoDb. Error: " + error + ", Response: " + response);
         }
     });
 }
@@ -38,7 +40,6 @@ function filterGeoData(callback) {
         }
     }
 
-    // listen on port 3000
     if (typeof callback == "function") {
         callback();
     }
