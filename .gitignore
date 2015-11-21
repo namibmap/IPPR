@@ -1,6 +1,5 @@
 .idea/*
 secret.js
-response.json
 node_modules
 npm-debug.log
 GeoData.json
