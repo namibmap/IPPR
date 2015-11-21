@@ -15,13 +15,12 @@
     "Oil",
     "Licences"
   ],
-  "author": "Woman Who Hack For Non-Profits",
+  "author": "Women Hack For Non-Profits",
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/namibmap/IPPR/issues"
   },
   "dependencies": {
-    "cartodb": "^0.2.1",
     "ejs": "~2.3.4",
     "express": "~4.13.3",
     "jsonfile": "~2.2.3",
