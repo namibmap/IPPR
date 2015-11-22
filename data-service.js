@@ -4,6 +4,7 @@ var secret = require('./secret'),
     jsonfile = require('jsonfile'),
     licenses = {},
     companies = [],
+    polygonData = {},
     data, geoData;
 
 function getGeoData(callback) {
@@ -54,6 +55,9 @@ function filterGeoData(callback) {
         }
     }
 
+    polygonData['type'] = data.type;
+    polygonData['features'] = data.features;
+    
     if (typeof callback == "function") {
         callback();
     }
@@ -61,7 +65,7 @@ function filterGeoData(callback) {
 
 exports.DataService = {
     getGeoData : getGeoData,
-    data : data,
+    polygonData : polygonData,
     licenses : licenses,
     companies : companies
 };

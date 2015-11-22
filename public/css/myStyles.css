@@ -59,7 +59,6 @@
 }
 
 .list-header{
-	/*background-color:#D6EBFF;*/
 	color:#000033;
 	padding-left:2px;
 	margin-top:1px;
@@ -67,7 +66,6 @@
 }
 
 .list-block{
-	/*background-color:#D6EBFF;*/
 	color:#000033;
 	padding-left:15px;
 	margin-top:1px;
@@ -78,4 +76,17 @@
 	height:40em;
 	overflow:hidden;
 	overflow-y:scroll;
+}
+
+#concessions-map {
+	height: 520px;
+	width: 95%;
+	margin-left: 17px;
+}
+
+.concessions-text-label {
+    font-size: 0.8em;
+    font-weight: 600;
+    padding-left: 35px;
+    padding-top: 12px;
 }
