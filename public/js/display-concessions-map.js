@@ -7,8 +7,10 @@ var map = L.map('concessions-map', {
 });
 
 $.get('/data', function(data) {
-  var geojsonFeatures = data.features;
-  createMapWithGeoJsonFeatures(geojsonFeatures);  
+  if (data.type == "FeatureCollection") {
+    var geojsonFeatures = data.features;
+    createMapWithGeoJsonFeatures(geojsonFeatures);  
+  }
 });
 
 function createMapWithGeoJsonFeatures(geojsonFeatures) {
@@ -33,19 +35,21 @@ function onEachFeature(feature, layer) {
       var concession_number = feature.properties.concession_number;
       var license_number = feature.properties.license_number;
       var company_name = feature.properties.company_name;
+      var popupContent = 'Concession: ' + concession_number + 
+          '<br/>License: ' + license_number + '<br/>Company: ' + company_name;        
 
-      // Label each polygon on the map
+      // Display a popup when the polygon is clicked
+      layer.bindPopup(popupContent);
+
+      // Label each polygon & display a popup when clicked as well
       var label = L.marker(layer.getBounds().getCenter(), {
         icon: L.divIcon({
           className: 'concessions-text-label',
           html: concession_number,
           iconSize: [100, 40]
         })
-      }).addTo(map);
-
-      // Add a tooltip that is displayed when polygon is clicked
-      var popupContent = 'Concession: ' + concession_number + 
-          '<br/>License: ' + license_number + '<br/>Company: ' + company_name;        
-      layer.bindPopup(popupContent);
+      })
+      .bindPopup(popupContent)
+      .addTo(map);
     }
 }
