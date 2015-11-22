@@ -1,4 +1,4 @@
-var express = require('express')
+var express = require('express'),
     DataService = require('./data-service').DataService;
 
 var app = express();

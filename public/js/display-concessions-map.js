@@ -1,5 +1,4 @@
-// Namibia coordinates found at http://www.openstreetmap.org/#map=6/-23.534/13.425
-// Geo Reference for a 'reasonable' zoom level: geo:-23.534,16.172?z=6
+// Namibia's coordinates as listed on http://www.openstreetmap.org/#map=6/-23.534/13.425
 var map = L.map('concessions-map', {
   center: [-23.534, 16.172],
   zoom: 5,
@@ -13,7 +12,8 @@ $.get('/data', function(data) {
 });
 
 function createMapWithGeoJsonFeatures(geojsonFeatures) {
-  // Create Namibia background tiling for the map
+  // Create Namibia country's background tiling for the map
+  // Uses CartoDb's Basemaps in "Positron" colour scheme: https://cartodb.com/basemaps/
   L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png', {    
     attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, ' + 
         'under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a>. ' + 
@@ -34,6 +34,7 @@ function onEachFeature(feature, layer) {
       var license_number = feature.properties.license_number;
       var company_name = feature.properties.company_name;
 
+      // Label each polygon on the map
       var label = L.marker(layer.getBounds().getCenter(), {
         icon: L.divIcon({
           className: 'concessions-text-label',
@@ -42,9 +43,9 @@ function onEachFeature(feature, layer) {
         })
       }).addTo(map);
 
+      // Add a tooltip that is displayed when polygon is clicked
       var popupContent = 'Concession: ' + concession_number + 
-          '<br/>License: ' + license_number + '<br/>Company: ' + company_name;
-        
+          '<br/>License: ' + license_number + '<br/>Company: ' + company_name;        
       layer.bindPopup(popupContent);
     }
 }
