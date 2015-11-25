@@ -1,7 +1,12 @@
 var express = require('express'),
-    DataService = require('./data-service').DataService;
+    DataService = require('./data-service').DataService
+    ua = require('universal-analytics');
 
 var app = express();
+
+//Google Analytics config
+var visitor = ua('UA-70697846-1');
+visitor.pageview("/").send();
 
 app.set('view engine', 'ejs');
 
