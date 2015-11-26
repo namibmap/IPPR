@@ -21,7 +21,7 @@ function getGeoData(callback) {
             // Fetch the data from CartoDb and save to filesystem first
             console.log('About to connect to CartoDB to get GeoJSON data...');
 
-            var geoDataRequest = 'https://namibmap.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT concessions.the_geom, concession_number, license_number, company_name FROM concessions, licenses, companies, license_holdings WHERE concessions.concession_license_id = licenses.license_id AND license_holdings.license_holding_company_id = companies.company_id AND license_holdings.license_holding_license_id = licenses.license_id&api_key=' + secret.API_KEY;    
+            var geoDataRequest = 'https://namibmap.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT concessions_anonymized.the_geom, concession_number, license_number, company_name FROM concessions_anonymized, licenses_anonymized, companies_anonymized, license_holdings_anonymized WHERE concession_license_id = license_id AND license_holding_company_id = company_id AND license_holding_license_id = license_id&api_key=' + secret.API_KEY;    
 
             request(geoDataRequest, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
