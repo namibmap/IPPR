@@ -15,7 +15,6 @@ app.get('/', function(req, res) {
     //Record Google Analytics only when sent from live server
     //Note live server has a secret.js that contains the GA_ID
     //whilest devs shouldn't. See comments on PR #63.
-    console.log("Retrieving secret.. " + secret.GA_ID);
     if (secret.GA_ID) {
         visitor = ua(secret.GA_ID);
         visitor.pageview("/").send();
