@@ -1,5 +1,7 @@
 var express = require('express'),
-    DataService = require('./data-service').DataService;
+    DataService = require('./data-service').DataService
+    ua = require('universal-analytics'),
+    secret = require('./secret');
 
 var app = express();
 
@@ -9,6 +11,16 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname +'/public'));
 
 app.get('/', function(req, res) {
+
+    //Record Google Analytics only when sent from live server
+    //Note live server has a secret.js that contains the GA_ID
+    //whilest devs shouldn't. See comments on PR #63.
+    console.log("Retrieving secret.. " + secret.GA_ID);
+    if (secret.GA_ID) {
+        visitor = ua(secret.GA_ID);
+        visitor.pageview("/").send();
+    }
+
     res.render('pages/index', {
         licenses: DataService.licenses,
         companies: DataService.companies
