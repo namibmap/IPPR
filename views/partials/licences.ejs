@@ -11,13 +11,10 @@
     <ul class="list-group">
         <%  for (var property in licenses){ %>
             <li class="list-group-item list-header"><%= property %></li>
-				<% for (var i=0;i<licenses[property].length;i++){ 				
-					console.log(licenses[property][i]);
+				<% for (var i=1;i<licenses[property].length;i++){ 				
 					var license_id = "";
 					concessionName = licenses[property][i].concession;
-					//		console.log(licenses[property][i]);
-					license_id = "license_" + licenses[property][i];
-					//		console.log(licenses[property][i]);
+					license_id = "license_" + licenses[property][i].id;
 				%>
             <li class="list-group-item list-block" data-ng-click="makeSelection($event, 'license')" id=<%= license_id %>> <%= concessionName %></li>
         <%}

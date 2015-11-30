@@ -35,7 +35,6 @@ var licenses ={};
 
 client.on('data',function(buffer){
   var CartoDBdataStream = JSON.parse(buffer);
-  console.log(CartoDBdataStream);
   for (var i=0; i<CartoDBdataStream.rows.length; i++){
     if (CartoDBdataStream.rows[i].company_name && CartoDBdataStream.rows[i].company_id){
 		var thisCompany = new companyRecord(CartoDBdataStream.rows[i].company_name, CartoDBdataStream.rows[i].company_id);

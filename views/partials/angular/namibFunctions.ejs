@@ -38,9 +38,9 @@
 				}
 				//select company holding selected licenseType  license id format = "license_" + concessionRecord.id;
 				var compId = elem.id;
-				var selectedId = "#" + compId.slice(8,compId.length);	// grab company Id from license Id
-				$scope.selectedCompany = getElementFromId(selectedId);	//HOW DO I DO THIS IN ANGULARJS?  data-ng-model?
-				console.log(selectedId);
+				var selectedId = compId.slice(8,compId.length);	// grab company Id from license Id
+				var newCompSel = document.getElementById(selectedId);	//HOW DO I DO THIS IN ANGULARJS?  data-ng-model?
+				$scope.selectCompany(newCompSel);				
 			}				
 		};
 	}]);
