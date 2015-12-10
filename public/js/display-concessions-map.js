@@ -13,6 +13,10 @@ $.get('/data', function(data) {
   }
 });
 
+$('button.license-number, button.license-concession-number').click(function(event) {
+  alert('button clicked! id: ' + $( this ).attr('id'));
+});
+
 function createMapWithGeoJsonFeatures(geojsonFeatures) {
   // Create Namibia country's background tiling for the map
   // Uses CartoDb's Basemaps in "Positron" colour scheme: https://cartodb.com/basemaps/

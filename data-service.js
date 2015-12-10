@@ -46,7 +46,11 @@ function filterGeoData(callback) {
     for (i = 0; i < data.features.length; i++) {
         var key = data.features[i].properties.license_number;
         if (key in licenses) {
-            licenses[key].push(data.features[i].properties.concession_number);
+            // Don't add the same concession twice
+            var concession = data.features[i].properties.concession_number;
+            if ( licenses[key].indexOf(concession) === -1 ) {
+                licenses[key].push(data.features[i].properties.concession_number);
+            }
         } else {
             licenses[key] = [data.features[i].properties.concession_number];
         }
