@@ -2,9 +2,12 @@
 var map = L.map('concessions-map', {
   center: [-23.534, 16.172],
   zoom: 5,
-  minZoom: 3,
-  maxZoom: 9
+  minZoom: 5,
+  maxZoom: 8
 });
+
+var licenseLabels = {},
+    licensePolygons = {};
 
 $.get('/data', function(data) {
   if (data.type == "FeatureCollection") {
@@ -13,24 +16,37 @@ $.get('/data', function(data) {
   }
 });
 
-$('button.license-number, button.license-concession-number').click(function(event) {
-  alert('button clicked! id: ' + $( this ).attr('id'));
+$('button.license-number').click(function(event) {
+  var clickedLicense = $( this ).attr('id');
+  toggleMapElementForClickedLicense(clickedLicense, licenseLabels);
+  toggleMapElementForClickedLicense(clickedLicense, licensePolygons);
 });
 
 function createMapWithGeoJsonFeatures(geojsonFeatures) {
   // Create Namibia country's background tiling for the map
   // Uses CartoDb's Basemaps in "Positron" colour scheme: https://cartodb.com/basemaps/
-  L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png', {    
-    attribution: 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, ' + 
+  var tileTemplate = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png';
+  var attributions = 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, ' + 
         'under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a>. ' + 
-        'Data by <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>, under ODbL.'
+        'Data by <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>, under ODbL.';
+  
+  L.tileLayer(tileTemplate, { 
+    attribution: attributions
   }).addTo(map);
 
   // Add PELs to the map
-  geojsonFeatures.forEach(function(geoJsonFeature) {
-    L.geoJson(geoJsonFeature, {
+  geojsonFeatures.forEach(function(feature) {
+    var polygon = L.geoJson(feature, {
       onEachFeature: onEachFeature
     }).addTo(map);
+
+    // Store PEL polygons for filtering later
+    var license_number = feature.properties.license_number;
+    if (licensePolygons.hasOwnProperty(license_number)) {
+        licensePolygons[license_number].push(polygon);
+      } else {
+        licensePolygons[license_number] = [polygon];
+      }
   });
 }
 
@@ -55,5 +71,33 @@ function onEachFeature(feature, layer) {
       })
       .bindPopup(popupContent)
       .addTo(map);
+
+      // Store polygon labels for filtering later
+      if (licenseLabels.hasOwnProperty(license_number)) {
+        licenseLabels[license_number].push(label);
+      } else {
+        licenseLabels[license_number] = [label];
+      }
     }
+}
+
+function toggleMapElementForClickedLicense(clickedLicense, licenseToMapElements) {
+  for (var license in licenseToMapElements) {
+    if (license !== clickedLicense) {
+      // Hide PEL map elements for all other licenses except the one clicked
+      var notClickedLicenseMapElements = licenseToMapElements[license];
+      notClickedLicenseMapElements.forEach(function(element) {
+        map.removeLayer(element);
+      });
+    } else {
+      // Display the PEL map element for the clicked license
+      var clickedLicenseMapElements = licenseToMapElements[clickedLicense];
+      clickedLicenseMapElements.forEach(function(element) {
+        // If it was hidden on a previous click, re-add it to the map
+        if (!(map.hasLayer(element))) {
+          map.addLayer(element)
+        }
+      });
+    }
+  }
 }
