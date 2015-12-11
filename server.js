@@ -24,7 +24,6 @@ app.get('/', function(req, res) {
         licenses: DataService.licenses,
         companies: DataService.companies
     });
-    console.log("licenses: " + JSON.stringify(DataService.licenses));
 });
 
 app.get('/data', function(req, res) {
