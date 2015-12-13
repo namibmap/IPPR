@@ -1,9 +1,19 @@
 var express = require('express'),
     DataService = require('./data-service').DataService
     ua = require('universal-analytics'),
-    secret = require('./secret');
+    secret = require('./secret'),
+    auth = require("http-auth");
+
+// Define variables for basic authentication. Issue #69
+var basic = auth.basic({
+  authRealm: "Private area",
+  file: __dirname + "/data/users.htpasswd"
+});
 
 var app = express();
+
+// Basic HTTP authentication
+app.use(auth.connect(basic));
 
 app.set('view engine', 'ejs');
 
