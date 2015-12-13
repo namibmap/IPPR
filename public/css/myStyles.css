@@ -78,6 +78,10 @@
     overflow-y: scroll;
 }
 
+button.list-group-item:focus {
+    outline: none;  
+}
+
 #concessions-map {
     height: 520px;
     width: 95%;
