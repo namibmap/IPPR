@@ -16,7 +16,7 @@ $.get('/data', function(data) {
   }
 });
 
-$('button.license-number').click(function(event) {
+$('.license-number').click(function(event) {
   // Highlight the clicked license in the list & un-highlight the others
   $(this).addClass('active').siblings().removeClass('active');
 
@@ -44,7 +44,7 @@ function createMapWithGeoJsonFeatures(geojsonFeatures) {
       style: defaultStyle
     }).addTo(map);
 
-    // Store PEL polygons for filtering later
+    // Store Geojson polygons for later use
     var license_number = feature.properties.license_number;
     if (licensePolygons.hasOwnProperty(license_number)) {
         licensePolygons[license_number].push(polygon);
@@ -52,6 +52,39 @@ function createMapWithGeoJsonFeatures(geojsonFeatures) {
         licensePolygons[license_number] = [polygon];
       }
   });
+
+  // Add a corner control to hold a reset button
+  var cornerControl = L.control({
+    position: 'bottomleft'
+  });
+
+  cornerControl.onAdd = function(map) {
+    this._div = L.DomUtil.create('div', 'info');
+    // Add a reset button
+    this._div.innerHTML += '<span class="reset" onclick="resetMap()">Reset</span>';    
+    return this._div;
+  };
+
+  cornerControl.addTo(map);
+}
+
+function resetMap() {
+  // Reset map zoom
+  map.setView([-23.534, 16.172], 5);
+  
+  // Reset all polygon styles
+  for (var license in licensePolygons) {
+    var polygons = licensePolygons[license];      
+    polygons.forEach(function(element) {
+      element.resetStyle(element);
+    });
+  }
+
+  // Remove any visible popups from the map
+  $(".leaflet-popup-close-button").click();
+
+  // De-select any active licenses in the list
+  $('.license-number').removeClass('active');
 }
 
 function highlightGeojsonForClickedLicense(clickedLicense) {
@@ -62,7 +95,7 @@ function highlightGeojsonForClickedLicense(clickedLicense) {
   });  
 
   // Reset polygons style for the remaining licenses
-  for (var license in licensePolygons) {    
+  for (var license in licensePolygons) {
     if (license !== clickedLicense) {
       var remainingPolygons = licensePolygons[license];      
       remainingPolygons.forEach(function(element) {
