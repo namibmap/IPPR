@@ -26,6 +26,7 @@
     "jsonfile": "~2.2.3",
     "fs": "0.0.2",
     "request": "~2.65.0",
-    "universal-analytics": "0.3.9"
+    "universal-analytics": "0.3.9",
+    "http-auth": "2.2.8"
   }
 }

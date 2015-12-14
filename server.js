@@ -1,9 +1,21 @@
 var express = require('express'),
     DataService = require('./data-service').DataService
     ua = require('universal-analytics'),
-    secret = require('./secret');
+    secret = require('./secret'),
+    auth = require("http-auth"); // TODO :: Not required on production
+
+// Define variables for basic authentication. Issue #69
+// TODO :: Not required on production
+var basic = auth.basic({
+  authRealm: "Private area",
+  file: __dirname + "/data/users.htpasswd"
+});
 
 var app = express();
+
+// Basic HTTP authentication
+// TODO :: Not required on production
+app.use(auth.connect(basic));
 
 app.set('view engine', 'ejs');
 
