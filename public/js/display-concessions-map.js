@@ -6,10 +6,10 @@ var map = L.map('concessions-map', {
   maxZoom: 8
 });
 
-function ConcessionBlock(license, concession, company, polygon) {
-  this.license_number = license;
-  this.concession_number = concession;
-  this.company_name = company;
+function ConcessionBlock(license_number, concession_number, company_name, polygon) {
+  this.license_number = license_number;
+  this.concession_number = concession_number;
+  this.company_name = company_name;
   this.polygon = polygon;
 }
 
@@ -29,6 +29,10 @@ $('.license-number').click(function(event) {
   // Highlight the concessions block in the map for the selected license
   var clickedLicense = $(this).attr('id');
   highlightGeojsonForClickedLicense(clickedLicense);
+
+  // Clear any selected companies (for now)
+  // TODO: We should actually implement 2-way binding between the licenses and company numbers for feature #41
+  $('.license-company-name').removeClass('active');
 });
 
 $('.license-concession-number').click(function(event) {
@@ -38,6 +42,23 @@ $('.license-concession-number').click(function(event) {
   // Highlight the concessions block in the map for the selected concession
   var clickedConcession = $(this).attr('id');
   highlightGeojsonForClickedConcession(clickedConcession);
+
+  // Clear any selected companies (for now)
+  // TODO: We should actually implement 2-way binding between the licenses and company numbers for feature #41
+  $('.license-company-name').removeClass('active');  
+});
+
+$('.license-company-name').click(function(event) {
+  // Highlight the clicked company in the list & un-highlight the others
+  $(this).addClass('active').siblings().removeClass('active');
+
+  // Highlight the concessions block in the map for the selected company
+  var clickedCompany = $(this).text();
+  highlightGeojsonForClickedCompany(clickedCompany);
+
+  // Clear any selected licenses or concession numbers (for now)
+  // TODO: We should actually implement 2-way binding between the licenses and company numbers for feature #41
+  $('.license-concession-number, .license-number').removeClass('active');    
 });
 
 
@@ -95,8 +116,8 @@ function resetMap() {
   // Remove any visible popups from the map
   $(".leaflet-popup-close-button").click();
 
-  // De-select any active licenses in the list
-  $('.license-number, .license-concession-number').removeClass('active');
+  // De-select any active licenses or companies in the list
+  $('.license-number, .license-concession-number, .license-company-name').removeClass('active');
 }
 
 function highlightGeojsonForClickedLicense(clickedLicense) {
@@ -118,6 +139,19 @@ function highlightGeojsonForClickedConcession(clickedConcession) {
     var concession_number = concessionBlock.concession_number;
     var polygon = concessionBlock.polygon;
     if (clickedConcession === concession_number) {
+      polygon.setStyle(highlightedStyle());
+    } else {
+      polygon.resetStyle(polygon);
+    }
+  });
+}
+
+function highlightGeojsonForClickedCompany(clickedCompany) {
+  // Highlight all polygons for the clicked company
+  concessionBlocks.forEach(function(concessionBlock) {
+    var company_name = concessionBlock.company_name;
+    var polygon = concessionBlock.polygon;
+    if (clickedCompany === company_name) {
       polygon.setStyle(highlightedStyle());
     } else {
       polygon.resetStyle(polygon);
