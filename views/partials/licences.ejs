@@ -12,7 +12,7 @@
         <%  for (var property in licenses){ %>
             <button type="button" class="list-group-item license-number" id=<%= property %>><%= property %></button>
             <% for (var i=0; i<licenses[property].length; i++){ %>
-                <span class="list-group-item license-concession-number" id=<%= licenses[property][i] %>><%= licenses[property][i] %></span>
+                <button type="button" class="list-group-item license-concession-number" id=<%= licenses[property][i] %>><%= licenses[property][i] %></button>
             <%}
         }%>
     </div>

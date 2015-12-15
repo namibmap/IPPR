@@ -6,8 +6,14 @@ var map = L.map('concessions-map', {
   maxZoom: 8
 });
 
-var licenseLabels = {},
-    licensePolygons = {};
+function ConcessionBlock(license, concession, company, polygon) {
+  this.license_number = license;
+  this.concession_number = concession;
+  this.company_name = company;
+  this.polygon = polygon;
+}
+
+var concessionBlocks = [];
 
 $.get('/data', function(data) {
   if (data.type == "FeatureCollection") {
@@ -24,6 +30,16 @@ $('.license-number').click(function(event) {
   var clickedLicense = $(this).attr('id');
   highlightGeojsonForClickedLicense(clickedLicense);
 });
+
+$('.license-concession-number').click(function(event) {
+  // Highlight the clicked concession in the list & un-highlight the others
+  $(this).addClass('active').siblings().removeClass('active');
+
+  // Highlight the concessions block in the map for the selected concession
+  var clickedConcession = $(this).attr('id');
+  highlightGeojsonForClickedConcession(clickedConcession);
+});
+
 
 function createMapWithGeoJsonFeatures(geojsonFeatures) {
   // Create Namibia country's background tiling for the map
@@ -46,11 +62,10 @@ function createMapWithGeoJsonFeatures(geojsonFeatures) {
 
     // Store Geojson polygons for later use
     var license_number = feature.properties.license_number;
-    if (licensePolygons.hasOwnProperty(license_number)) {
-        licensePolygons[license_number].push(polygon);
-      } else {
-        licensePolygons[license_number] = [polygon];
-      }
+    var concession_number = feature.properties.concession_number;
+    var company_name = feature.properties.company_name;
+    var block = new ConcessionBlock(license_number, concession_number, company_name, polygon);
+    concessionBlocks.push(block);
   });
 
   // Add a corner control to hold a reset button
@@ -73,36 +88,41 @@ function resetMap() {
   map.setView([-23.534, 16.172], 5);
   
   // Reset all polygon styles
-  for (var license in licensePolygons) {
-    var polygons = licensePolygons[license];      
-    polygons.forEach(function(element) {
-      element.resetStyle(element);
-    });
-  }
+  concessionBlocks.forEach(function(concessionBlock) {
+    concessionBlock.polygon.resetStyle(concessionBlock.polygon);
+  });
 
   // Remove any visible popups from the map
   $(".leaflet-popup-close-button").click();
 
   // De-select any active licenses in the list
-  $('.license-number').removeClass('active');
+  $('.license-number, .license-concession-number').removeClass('active');
 }
 
 function highlightGeojsonForClickedLicense(clickedLicense) {
   // Highlight all polygons for the clicked license
-  var clickedLicensePolygons = licensePolygons[clickedLicense];
-  clickedLicensePolygons.forEach(function(element) {
-    element.setStyle(highlightedStyle());
-  });  
-
-  // Reset polygons style for the remaining licenses
-  for (var license in licensePolygons) {
-    if (license !== clickedLicense) {
-      var remainingPolygons = licensePolygons[license];      
-      remainingPolygons.forEach(function(element) {
-        element.resetStyle(element);
-      });
+  concessionBlocks.forEach(function(concessionBlock) {
+    var license_number = concessionBlock.license_number;
+    var polygon = concessionBlock.polygon;
+    if (clickedLicense === license_number) {
+      polygon.setStyle(highlightedStyle());
+    } else {
+      polygon.resetStyle(polygon);
     }
-  }
+  });
+}
+
+function highlightGeojsonForClickedConcession(clickedConcession) {
+  // Highlight all polygons for the clicked concession
+  concessionBlocks.forEach(function(concessionBlock) {
+    var concession_number = concessionBlock.concession_number;
+    var polygon = concessionBlock.polygon;
+    if (clickedConcession === concession_number) {
+      polygon.setStyle(highlightedStyle());
+    } else {
+      polygon.resetStyle(polygon);
+    }
+  });
 }
 
 function defaultStyle(feature) {
@@ -137,7 +157,7 @@ function onEachFeature(feature, layer) {
     layer.bindPopup(popupContent);
 
     // Label each polygon & display a popup when clicked as well
-    var label = L.marker(layer.getBounds().getCenter(), {
+    L.marker(layer.getBounds().getCenter(), {
       icon: L.divIcon({
         className: 'concessions-text-label',
         html: concession_number,
@@ -146,12 +166,5 @@ function onEachFeature(feature, layer) {
     })
     .bindPopup(popupContent)
     .addTo(map);
-
-    // Store polygon labels for later use
-    if (licenseLabels.hasOwnProperty(license_number)) {
-      licenseLabels[license_number].push(label);
-    } else {
-      licenseLabels[license_number] = [label];
-    }
   }
 }
