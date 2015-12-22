@@ -8,12 +8,12 @@
         </div>
         <input type="text" class="form-control">
     </div>
-    <ul class="list-group">
+    <div class="list-group">
         <%  for (var property in licenses){ %>
-            <li class="list-group-item list-header"><%= property %></li>
+            <button type="button" class="list-group-item license-number" id=<%= property %>><%= property %></button>
             <% for (var i=0; i<licenses[property].length; i++){ %>
-                <li class="list-group-item list-block"><%= licenses[property][i] %></li>
+                <button type="button" class="list-group-item license-concession-number" id=<%= licenses[property][i] %>><%= licenses[property][i] %></button>
             <%}
         }%>
-    </ul>
+    </div>
 </div>

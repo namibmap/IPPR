@@ -21,7 +21,7 @@ function getGeoData(callback) {
             // Fetch the data from CartoDb and save to filesystem first
             console.log('About to connect to CartoDB to get GeoJSON data...');
 
-            var geoDataRequest = 'https://namibmap.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT concessions_anonymized.the_geom, concessions_anonymized.concession_number, licenses_anonymized.license_number, companies_anonymized.company_name FROM concessions_anonymized, licenses_anonymized, companies_anonymized, license_holdings_anonymized WHERE concessions_anonymized.concession_license_id = licenses_anonymized.license_id AND license_holdings_anonymized.license_holding_company_id = companies_anonymized.company_id AND license_holdings_anonymized.license_holding_license_id = licenses_anonymized.license_id&api_key=' + secret.API_KEY;    
+            var geoDataRequest = 'https://namibmap.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT DISTINCT concessions_anonymized.the_geom, concessions_anonymized.concession_number, licenses_anonymized.license_number, companies_anonymized.company_name FROM concessions_anonymized, licenses_anonymized, companies_anonymized, license_holdings_anonymized WHERE concessions_anonymized.concession_license_id = licenses_anonymized.license_id AND license_holdings_anonymized.license_holding_company_id = companies_anonymized.company_id AND license_holdings_anonymized.license_holding_license_id = licenses_anonymized.license_id&api_key=' + secret.API_KEY;
 
             request(geoDataRequest, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
@@ -46,7 +46,11 @@ function filterGeoData(callback) {
     for (i = 0; i < data.features.length; i++) {
         var key = data.features[i].properties.license_number;
         if (key in licenses) {
-            licenses[key].push(data.features[i].properties.concession_number);
+            // Don't show the same concession twice under the same license
+            var concession = data.features[i].properties.concession_number;
+            if ( licenses[key].indexOf(concession) === -1 ) {
+                licenses[key].push(data.features[i].properties.concession_number);
+            }
         } else {
             licenses[key] = [data.features[i].properties.concession_number];
         }
