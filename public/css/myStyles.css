@@ -72,14 +72,46 @@
     margin-bottom: 1px;
 }
 
-.list-group {
-    height: 40em;
-    overflow: hidden;
-    overflow-y: scroll;
+.list-group-item {
+    cursor: pointer;
+    border-radius: 0;
 }
 
-button.list-group-item:focus {
-    outline: none;  
+.list-group-item:focus {
+    outline: none;
+}
+
+.list-group .list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.list-group {
+    margin-bottom: 0;
+}
+
+.list-group-item {
+}
+
+.list-group .list-group {
+    margin: 0;
+    margin-top: 10px;
+}
+
+.list-group-item li.list-group-item {
+    margin: 0 -15px;
+    border-top: 1px solid #ddd !important;
+    border-bottom: 0;
+    padding-left: 30px;
+    border-width: 0 0;
+}
+
+.list-group-item li.list-group-item:last-child {
+    padding-bottom: 0;
+}
+
+.list-group-item li.list-group-item {
+    border-top: 1px solid #DDD !important;
 }
 
 #concessions-map {
