@@ -9,8 +9,8 @@
         <input type="text" class="form-control">
     </div>
     <div class="list-group">
-        <% for (var i=0; i<companies.length; i++){ %>
-            <button type="button" class="list-group-item license-company-name"><%= companies[i] %></button>
-        <% }%>
+        <% for (var company_id in companies) { %>
+            <button type="button" class="list-group-item license-company-name" id="<%= company_id %>"><%= companies[company_id] %></button>
+        <% } %>
     </div>
 </div>
