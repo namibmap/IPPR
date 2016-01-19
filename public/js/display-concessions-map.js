@@ -50,6 +50,21 @@ $('.license-company-name').click(function(event) {
   performHighlightsForCompany(clickedCompany);
 });
 
+$('#filter-licenses').keyup(function() {
+  var textToSearch = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+  $('.license-number').show().filter(function() {
+    var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+      return !~text.indexOf(textToSearch);
+  }).hide();
+});
+
+$('#filter-companies').keyup(function() {
+  var textToSearch = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+  $('.license-company-name').show().filter(function() {
+    var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+      return !~text.indexOf(textToSearch);
+  }).hide();
+});
 
 function createMapWithGeoJsonFeatures(geojsonFeatures) {
   // Create Namibia country's background tiling for the map
@@ -108,10 +123,18 @@ function resetMap() {
 
   // De-select any active licenses or companies in the list
   $('.license-number, .license-concession-number, .license-company-name').removeClass('active');
+
+  // Un-hide any hidden lists due to filters
+  $('.license-number, .license-concession-number, .license-company-name').show();
+
+  // Clear out search fields
+  $('#filter-licenses, #filter-companies').val("");
 }
 
 function performHighlightsForLicense(clickedLicense) {
   $('.license-concession-number, .license-company-name').removeClass('active');
+  $('.license-company-name').show();
+  $('#filter-companies').val("");
   // Highlight all polygons for the clicked license
   concessionBlocks.forEach(function(concessionBlock) {
     var license_number = concessionBlock.license_number;
@@ -146,6 +169,8 @@ function performHighlightsForConcession(clickedConcession) {
 
 function performHighlightsForCompany(clickedCompany) {
   $('.license-concession-number, .license-number').removeClass('active');
+  $('.license-number').show();
+  $('#filter-licenses').val("");
   // Highlight all polygons for the clicked company
   concessionBlocks.forEach(function(concessionBlock) {
     var company_id = concessionBlock.company_id;

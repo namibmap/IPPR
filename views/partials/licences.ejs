@@ -6,14 +6,17 @@
                 <i class="glyphicon glyphicon-search"></i>
             </button>
         </div>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" id="filter-licenses">
     </div>
-    <div class="list-group">
+    <ul class="list-group">
         <% for (var license_number in licenses) { %>
-            <button type="button" class="list-group-item license-number" id="<%= license_number %>"><%= license_number %></button>
-            <% for (var i=0; i<licenses[license_number].length; i++) { %>
-                <button type="button" class="list-group-item license-concession-number" id="<%= licenses[license_number][i] %>"><%= licenses[license_number][i] %></button>
-            <% } %>
+            <li class="list-group-item license-number" id="<%= license_number %>"><%= license_number %>
+                <ul class="list-group">
+                    <% for (var i=0; i<licenses[license_number].length; i++) { %>
+                        <li class="list-group-item license-concession-number" id="<%= licenses[license_number][i] %>"><%= licenses[license_number][i] %></li>
+                    <% } %>
+                </ul>
+            </li>
         <% } %>
-    </div>
+    </ul>
 </div>

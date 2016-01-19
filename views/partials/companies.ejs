@@ -6,11 +6,11 @@
                 <i class="glyphicon glyphicon-search"></i>
             </button>
         </div>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" id="filter-companies">
     </div>
-    <div class="list-group">
+    <ul class="list-group">
         <% for (var company_id in companies) { %>
-            <button type="button" class="list-group-item license-company-name" id="<%= company_id %>"><%= companies[company_id] %></button>
+            <li class="list-group-item license-company-name" id="<%= company_id %>"><%= companies[company_id] %></li>
         <% } %>
-    </div>
+    </ul>
 </div>
