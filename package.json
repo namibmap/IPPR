@@ -1,7 +1,7 @@
 {
   "name": "IPPR",
-  "version": "0.0.0",
-  "description": "Website for visualising the trends in awarding licences for Oil exploration in Namibia ",
+  "version": "0.0.1",
+  "description": "Website for visualising the trends in awarding licences for oil exploration in Namibia ",
   "main": "server.js",
   "scripts": {
     "test": "make test"
@@ -15,7 +15,7 @@
     "Oil",
     "Licences"
   ],
-  "author": "Women Hack For Non-Profits",
+  "author": "Women Hack For Non Profits",
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/namibmap/IPPR/issues"
