@@ -33,7 +33,7 @@ Describe and show how to run the tests with code examples.
 
 MIT License
 
-Copyright (c) [year] [fullname]
+Copyright (c) [2016] [the engine room]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
