@@ -1,7 +1,7 @@
 # IPPR
 ## Synopsis
 
-At the top of the file there should be a short introduction and/ or overview that explains **what** the project is. This description should match descriptions added for package managers (Gemspec, package.json, etc.)
+The goal of this project is to map trends in allocation of Petroleum Exploration Licences (PELS) in Namibia. By structuring and mapping data, details, trends and connections in this sector, this platform will work to open up a system that is currently opaque and vulnerable to corruption. 
 
 ## Code Example
 
@@ -9,7 +9,7 @@ Show what the library does as concisely as possible, developers should be able t
 
 ## Motivation
 
-A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
+The project will develop a system that simplifies the process of turning oil and gas exploration data into usable formats and visualizations on the web. The data gathered will aid further research which will help the public better understand the trends and signs of corruption in the sector. We want to expose these information on a publicly available website.
 
 ## Installation
 
