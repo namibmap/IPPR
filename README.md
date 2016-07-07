@@ -25,9 +25,9 @@ Describe and show how to run the tests with code examples.
 
 ## Contributors
 
-The Engine Room
-Women Who Hack For Non Profits
-Don Hubert
+* The Engine Room
+* Women Who Hack For Non Profits
+* Don Hubert
 
 ## License
 
